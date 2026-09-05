@@ -15,10 +15,15 @@ This project provides an intelligent task management approach that evaluates emp
 The system considers:
 
 * Employee skill level
+
 * Employee availability
+
 * Current workload
+
 * Fatigue score
+
 * Task-required skill
+
 * Task priority and deadline
 
 When an assigned employee becomes unavailable, pending work can be reassigned to another suitable active employee based on the allocation logic.
@@ -30,13 +35,21 @@ The platform also uses gamification to track employee performance through points
 ## 🎯 Objectives
 
 * Automate employee task assignment.
+
 * Allocate tasks to suitable employees based on multiple factors.
+
 * Reduce workload imbalance.
+
 * Reallocate tasks when employees become unavailable.
+
 * Track employee productivity.
+
 * Encourage timely task completion through gamification.
+
 * Help managers identify high-performing employees.
+
 * Provide centralized task, leave, notification, and productivity management.
+
 * Provide separate Admin and Employee experiences.
 
 ---
@@ -50,21 +63,33 @@ The system provides authentication for different user roles.
 **Admin**
 
 * Manage employees
+
 * Create and manage tasks
+
 * Monitor productivity
+
 * View analytics
+
 * Manage leave requests
+
 * Monitor employee performance
+
 * Access leaderboard and system information
 
 **Employee**
 
 * View assigned tasks
+
 * Update task status
+
 * Manage personal task information
+
 * Submit leave requests
+
 * View productivity/performance information
+
 * View notifications
+
 * Access calendar-related information
 
 ---
@@ -76,18 +101,27 @@ The system includes an AI-based/rule-based task allocation service.
 Employees are evaluated using:
 
 * Skill Match
+
 * Availability
+
 * Workload
+
 * Fatigue
 
 The implemented suitability formula is:
 
 ```text
+
 Score =
+
 (0.4 × Skill Match)
+
 + (0.3 × Availability)
+
 - (0.2 × Workload)
+
 - (0.1 × Fatigue)
+
 ```
 
 The employee with the highest suitability score among eligible active employees is selected for the task.
@@ -103,9 +137,13 @@ When an employee becomes unavailable, pending work can be reassigned to another 
 The system considers:
 
 * Employee availability
+
 * Required skill
+
 * Existing workload
+
 * Employee status
+
 * Fatigue level
 
 This helps reduce task delays caused by employee absence or unavailability.
@@ -131,9 +169,13 @@ The accumulated performance information can be used to create rankings and ident
 ### Benefits
 
 * Encourages timely task completion.
+
 * Provides measurable performance indicators.
+
 * Helps managers identify consistently high-performing employees.
+
 * Supports informed employee selection for important/new projects.
+
 * Creates a transparent performance-oriented environment.
 
 ---
@@ -145,9 +187,13 @@ The application provides analytics-related functionality for monitoring employee
 Managers can use performance information to understand:
 
 * Task completion
+
 * Employee productivity
+
 * Performance trends
+
 * Work distribution
+
 * Employee rankings
 
 ---
@@ -167,8 +213,11 @@ Employees can submit leave requests through the system.
 The application provides functionality for:
 
 * Leave request submission
+
 * Leave management
+
 * Leave status tracking
+
 * Admin/manager-side leave handling
 
 Employee availability can also affect task allocation and reallocation.
@@ -198,11 +247,17 @@ The Admin dashboard provides a centralized view for managing the workforce and m
 Admin functionality includes areas such as:
 
 * Employee management
+
 * Task management
+
 * Analytics
+
 * Productivity monitoring
+
 * Leave management
+
 * Notifications
+
 * Performance/leaderboard information
 
 ---
@@ -214,50 +269,93 @@ Employees have a dedicated dashboard for accessing their work-related informatio
 Employees can manage and view:
 
 * Assigned tasks
+
 * Task status
+
 * Leave requests
+
 * Notifications
+
 * Calendar
+
 * Productivity/performance information
 
 ---
 
-## 🧠 Task Allocation Algorithm
+**## 📸 Screenshots
+
+🏠 TaskAI Landing Page
+
+
+
+🔐 Login Page
+
+
+
+🛡️ Admin Dashboard
+
+
+
+👨‍💻 Employee Dashboard
+
+
+
+🧠 Task Allocation Algorithm**
 
 The core allocation logic evaluates eligible active employees.
 
 ### Input
 
 ```text
+
 Employee:
-    Skills
-    Availability
-    Workload
-    Fatigue Score
-    Status
+
+    Skills
+
+    Availability
+
+    Workload
+
+    Fatigue Score
+
+    Status
 
 Task:
-    Required Skill
+
+    Required Skill
+
 ```
 
 ### Process
 
 ```text
+
 1. Retrieve employees.
+
 2. Filter employees with ACTIVE status.
+
 3. Compare the required task skill with employee skills.
+
 4. Evaluate employee availability.
+
 5. Evaluate current workload.
+
 6. Evaluate fatigue score.
+
 7. Calculate suitability score.
+
 8. Compare eligible employees.
+
 9. Select the employee with the highest score.
+
 ```
 
 ### Output
 
 ```text
+
 Best-suited available employee
+
 ```
 
 The backend implements this logic in `AITaskAllocationService`.
@@ -267,21 +365,37 @@ The backend implements this logic in `AITaskAllocationService`.
 ## 🏆 Gamification Workflow
 
 ```text
+
 Task Assigned
-      ↓
+
+      ↓
+
 Employee Works on Task
-      ↓
+
+      ↓
+
 Task Completed
-      ↓
+
+      ↓
+
 Completion Time Evaluated
-      ↓
+
+      ↓
+
 Performance Points Awarded
-      ↓
+
+      ↓
+
 Employee Score Updated
-      ↓
+
+      ↓
+
 Leaderboard Updated
-      ↓
+
+      ↓
+
 Manager Can Identify High Performers
+
 ```
 
 The gamification mechanism provides a measurable way to recognize employee task-completion performance.
@@ -291,44 +405,83 @@ The gamification mechanism provides a measurable way to recognize employee task-
 ## 🏗️ System Architecture
 
 ```text
-                    ┌─────────────────────────┐
-                    │        User            │
-                    │ Admin / Employee       │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │    React Frontend       │
-                    │                         │
-                    │ Dashboards              │
-                    │ Tasks                   │
-                    │ Calendar                │
-                    │ Analytics               │
-                    │ Leaderboard             │
-                    │ Leave Management        │
-                    │ Notifications           │
-                    │ Chatbot                 │
-                    └────────────┬────────────┘
-                                 │
-                           REST APIs
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │   Spring Boot Backend   │
-                    │                         │
-                    │ Controllers             │
-                    │ Services                │
-                    │ DTOs                    │
-                    │ Security                │
-                    │ Repositories            │
-                    │ Business Logic           │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │       MySQL             │
-                    │       Database           │
-                    └─────────────────────────┘
+
+                    ┌─────────────────────────┐
+
+                    │        User            │
+
+                    │ Admin / Employee       │
+
+                    └────────────┬────────────┘
+
+                                 │
+
+                                 ▼
+
+                    ┌─────────────────────────┐
+
+                    │    React Frontend       │
+
+                    │                         │
+
+                    │ Dashboards              │
+
+                    │ Tasks                   │
+
+                    │ Calendar                │
+
+                    │ Analytics               │
+
+                    │ Leaderboard             │
+
+                    │ Leave Management        │
+
+                    │ Notifications           │
+
+                    │ Chatbot                 │
+
+                    └────────────┬────────────┘
+
+                                 │
+
+                           REST APIs
+
+                                 │
+
+                                 ▼
+
+                    ┌─────────────────────────┐
+
+                    │   Spring Boot Backend   │
+
+                    │                         │
+
+                    │ Controllers             │
+
+                    │ Services                │
+
+                    │ DTOs                    │
+
+                    │ Security                │
+
+                    │ Repositories            │
+
+                    │ Business Logic           │
+
+                    └────────────┬────────────┘
+
+                                 │
+
+                                 ▼
+
+                    ┌─────────────────────────┐
+
+                    │       MySQL             │
+
+                    │       Database           │
+
+                    └─────────────────────────┘
+
 ```
 
 ---
@@ -338,25 +491,41 @@ The gamification mechanism provides a measurable way to recognize employee task-
 ### Frontend
 
 * React.js
+
 * JavaScript
+
 * HTML5
+
 * CSS3
+
 * Vite
+
 * React Router
+
 * Axios
+
 * React Calendar
+
 * Chart.js
+
 * Recharts
+
 * Framer Motion
+
 * Lucide React
 
 ### Backend
 
 * Java
+
 * Spring Boot
+
 * Spring Data JPA
+
 * Hibernate
+
 * REST APIs
+
 * Maven
 
 ### Database
@@ -366,10 +535,15 @@ The gamification mechanism provides a measurable way to recognize employee task-
 ### Development Tools
 
 * Git
+
 * GitHub
+
 * Visual Studio Code
+
 * Eclipse/IDE
+
 * Maven
+
 * npm
 
 ---
@@ -377,43 +551,81 @@ The gamification mechanism provides a measurable way to recognize employee task-
 ## 📂 Project Structure
 
 ```text
+
 AI-Based-Task-Reallocation-Employee-Productivity-System/
+
 │
+
 ├── TaskAI/
-│   │
-│   ├── backend/
-│   │   ├── src/
-│   │   │   └── main/
-│   │   │       ├── java/com/taskai/
-│   │   │       │   ├── config/
-│   │   │       │   ├── controller/
-│   │   │       │   ├── dto/
-│   │   │       │   ├── model/
-│   │   │       │   ├── repository/
-│   │   │       │   ├── security/
-│   │   │       │   ├── service/
-│   │   │       │   └── TaskAiApplication.java
-│   │   │       │
-│   │   │       └── resources/
-│   │   │
-│   │   └── pom.xml
-│   │
-│   └── frontend/
-│       ├── public/
-│       ├── src/
-│       │   ├── api/
-│       │   ├── components/
-│       │   ├── context/
-│       │   ├── pages/
-│       │   ├── App.jsx
-│       │   ├── App.css
-│       │   ├── index.css
-│       │   └── main.jsx
-│       │
-│       ├── package.json
-│       └── vite.config.js
+
+│   │
+
+│   ├── backend/
+
+│   │   ├── src/
+
+│   │   │   └── main/
+
+│   │   │       ├── java/com/taskai/
+
+│   │   │       │   ├── config/
+
+│   │   │       │   ├── controller/
+
+│   │   │       │   ├── dto/
+
+│   │   │       │   ├── model/
+
+│   │   │       │   ├── repository/
+
+│   │   │       │   ├── security/
+
+│   │   │       │   ├── service/
+
+│   │   │       │   └── TaskAiApplication.java
+
+│   │   │       │
+
+│   │   │       └── resources/
+
+│   │   │
+
+│   │   └── pom.xml
+
+│   │
+
+│   └── frontend/
+
+│       ├── public/
+
+│       ├── src/
+
+│       │   ├── api/
+
+│       │   ├── components/
+
+│       │   ├── context/
+
+│       │   ├── pages/
+
+│       │   ├── App.jsx
+
+│       │   ├── App.css
+
+│       │   ├── index.css
+
+│       │   └── main.jsx
+
+│       │
+
+│       ├── package.json
+
+│       └── vite.config.js
+
 │
+
 └── README.md
+
 ```
 
 ---
@@ -425,21 +637,33 @@ The backend is organized using a layered Spring Boot architecture.
 ### Controllers
 
 * `AuthController`
+
 * `EmployeeController`
+
 * `TaskController`
+
 * `AnalyticsController`
+
 * `GamificationController`
+
 * `LeaveRequestController`
+
 * `NotificationController`
 
 ### Services
 
 * `AITaskAllocationService`
+
 * `AiAssignmentService`
+
 * `EmployeeService`
+
 * `TaskService`
+
 * `LeaveRequestService`
+
 * `EmailService`
+
 * `DataSeeder`
 
 This structure separates API handling from business logic and data-access responsibilities.
@@ -451,23 +675,37 @@ This structure separates API handling from business logic and data-access respon
 The React frontend contains pages/components for:
 
 * Landing Page
+
 * Login
+
 * Sign Up
+
 * Admin Dashboard
+
 * Employee Dashboard
+
 * Employees
+
 * Tasks
+
 * Analytics
+
 * Calendar
+
 * Leaderboard
+
 * Leave Management
+
 * Leave Requests
+
 * Notifications
 
 Additional reusable components include:
 
 * ChatBot
+
 * Sidebar
+
 * StatCard
 
 ---
@@ -475,43 +713,77 @@ Additional reusable components include:
 ## 🔄 Application Workflow
 
 ```text
+
 Admin Login
-    ↓
+
+    ↓
+
 Admin Dashboard
-    ↓
+
+    ↓
+
 Create / Manage Employees
-    ↓
+
+    ↓
+
 Create Task
-    ↓
+
+    ↓
+
 Task Allocation Algorithm
-    ↓
+
+    ↓
+
 Suitable Employee Selected
-    ↓
+
+    ↓
+
 Employee Receives Task
-    ↓
+
+    ↓
+
 Employee Completes Task
-    ↓
+
+    ↓
+
 Productivity / Gamification Updated
-    ↓
+
+    ↓
+
 Leaderboard & Analytics
+
 ```
 
 ### Employee Unavailability Workflow
 
 ```text
+
 Employee Becomes Unavailable
-          ↓
+
+          ↓
+
 Assigned/Pending Task Identified
-          ↓
+
+          ↓
+
 Active Employees Evaluated
-          ↓
+
+          ↓
+
 Skills + Availability + Workload + Fatigue
-          ↓
+
+          ↓
+
 Suitability Score Calculated
-          ↓
+
+          ↓
+
 Best Available Employee Selected
-          ↓
+
+          ↓
+
 Task Reallocated
+
 ```
 
 ---
@@ -543,10 +815,15 @@ The system can respond to employee availability changes by supporting task reall
 Install the following:
 
 * Java JDK
+
 * Maven
+
 * Node.js
+
 * npm
+
 * MySQL
+
 * Git
 
 ---
@@ -554,14 +831,19 @@ Install the following:
 ## 🗄️ Database Setup
 
 1. Install and start MySQL.
+
 2. Create a database for the application.
+
 3. Configure the database username, password, and connection URL in the Spring Boot application's configuration.
+
 4. Start the backend.
 
 Example:
 
 ```sql
+
 CREATE DATABASE taskai;
+
 ```
 
 Update the database configuration according to your local environment.
@@ -575,13 +857,17 @@ Update the database configuration according to your local environment.
 Navigate to the backend directory:
 
 ```bash
+
 cd TaskAI/backend
+
 ```
 
 Run:
 
 ```bash
+
 mvn spring-boot:run
+
 ```
 
 The backend will start using the Spring Boot configuration in the project.
@@ -593,19 +879,25 @@ The backend will start using the Spring Boot configuration in the project.
 Open another terminal:
 
 ```bash
+
 cd TaskAI/frontend
+
 ```
 
 Install dependencies:
 
 ```bash
+
 npm install
+
 ```
 
 Start the development server:
 
 ```bash
+
 npm run dev
+
 ```
 
 Open the Vite development URL shown in the terminal.
@@ -621,11 +913,17 @@ Axios is used on the frontend for HTTP communication.
 The backend exposes controller endpoints for areas such as:
 
 * Authentication
+
 * Employees
+
 * Tasks
+
 * Analytics
+
 * Gamification
+
 * Leave requests
+
 * Notifications
 
 ---
@@ -637,11 +935,17 @@ The project contains a dedicated security package and authentication controller 
 For production deployment, additional security hardening should be applied, including:
 
 * Secure password management
+
 * Environment variables for secrets
+
 * HTTPS
+
 * Strong authentication configuration
+
 * Input validation
+
 * Proper authorization checks
+
 * Production database configuration
 
 ---
@@ -651,15 +955,25 @@ For production deployment, additional security hardening should be applied, incl
 Possible future improvements include:
 
 * Machine-learning-based employee performance prediction
+
 * More advanced workload forecasting
+
 * Automated fatigue prediction
+
 * Advanced recommendation models
+
 * Real-time notifications using WebSockets
+
 * Docker-based deployment
+
 * Cloud deployment
+
 * CI/CD pipeline
+
 * Advanced reporting and export
+
 * More sophisticated gamification and reward mechanisms
+
 * AI-powered project staffing recommendations
 
 ---
@@ -669,12 +983,15 @@ Possible future improvements include:
 **Manoj K**
 
 B.Tech Information Technology
+
 Full Stack Developer
 
 GitHub:
+
 https://github.com/manojyasuo
 
 Project Repository:
+
 https://github.com/manojyasuo/AI-Based-Task-Reallocation-Employee-Productivity-System
 
 ---
@@ -682,17 +999,29 @@ https://github.com/manojyasuo/AI-Based-Task-Reallocation-Employee-Productivity-S
 ## 📌 Project Highlights
 
 * Intelligent task allocation
+
 * Skill-based employee selection
+
 * Availability-aware assignment
+
 * Workload-aware assignment
+
 * Fatigue-aware scoring
+
 * Dynamic task reallocation
+
 * Employee productivity tracking
+
 * Gamification and leaderboard
+
 * Leave management
+
 * Analytics dashboard
+
 * Admin and Employee dashboards
+
 * REST API-based architecture
+
 * React + Spring Boot full-stack implementation
 
 ---
